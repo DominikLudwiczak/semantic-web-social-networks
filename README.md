@@ -6,7 +6,7 @@ https://www.overleaf.com/read/gtsnyqhcgpzz#994725
 
 ### Description:
 
-Dataset containing twitter (X) profiles data and respective statitics
+Description: Manually labeled human and bot accounts from 2018 US midterm elections. Labels and processed user objects.
 
 ### Columns:
 
@@ -31,4 +31,4 @@ Dataset containing twitter (X) profiles data and respective statitics
 - tid
 - label
 
-[Dataset link](https://botometer.osome.iu.edu/bot-repository/datasets/midterm-2018/midterm-2018.tar.gz)
+[Dataset link](https://botometer.osome.iu.edu/bot-repository/datasets.html)
