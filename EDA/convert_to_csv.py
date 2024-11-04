@@ -8,3 +8,6 @@ def convert_to_csv(prefix=""):
 
     merged = pd.merge(users_df, labels, on="user_id")
     merged.to_csv(f"{prefix}midterm-2018/data.csv", index=False)
+
+
+convert_to_csv()

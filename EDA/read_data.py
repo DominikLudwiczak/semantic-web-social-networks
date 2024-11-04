@@ -3,13 +3,19 @@ import pandas as pd
 
 
 def read_data_json(prefix=""):
-
     with open(
         f"{prefix}midterm-2018/midterm-2018_processed_user_objects.json", "r"
     ) as f:
         data = json.load(f)
-        users_df = pd.DataFrame(data)
-        return users_df
+    users_df = pd.DataFrame(data)
+    users_df["description"] = (
+        users_df["description"]
+        .fillna("")
+        .replace("\n", " ")
+        .replace("\t", " ")
+        .replace("\r", " ")
+    )
+    return users_df
 
 
 def read_labels(prefix=""):
