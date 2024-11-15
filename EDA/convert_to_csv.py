@@ -1,4 +1,4 @@
-from read_data import read_data_json, read_labels
+from src.preprocessing.read_data import read_data_json, read_labels
 import pandas as pd
 
 

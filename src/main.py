@@ -15,7 +15,7 @@ def main():
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42
     )
-    rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
+    rf_model = RandomForestClassifier(n_estimators=100, random_state=23)
 
     rf_model.fit(X_train, y_train)
     y_pred = rf_model.predict(X_test)
@@ -43,7 +43,7 @@ def main():
     plt.title("Feature Importances")
     plt.xlabel("Importance Score")
     plt.ylabel("Features")
-    plt.savefig("xd.png")
+    plt.savefig("feature_importance_lookup.png")
 
 
 if __name__ == "__main__":
