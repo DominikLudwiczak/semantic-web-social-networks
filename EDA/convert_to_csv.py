@@ -1,7 +1,6 @@
 from src.preprocessing.read_data import read_data_json, read_labels
 import pandas as pd
 
-
 def convert_to_csv(prefix=""):
     users_df = read_data_json(prefix=prefix)
     labels = read_labels(prefix=prefix)

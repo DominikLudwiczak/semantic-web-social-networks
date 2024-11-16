@@ -15,7 +15,7 @@ def read_data_json(prefix=""):
 def read_labels(prefix=""):
     file_path = f"{prefix}midterm-2018/midterm-2018.tsv"
 
-    labels = pd.read_csv(file_path, sep="\t")
+    labels = pd.read_csv(file_path, sep="\t", header=None)
     labels.columns = ["user_id", "label"]
     return labels
 

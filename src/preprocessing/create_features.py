@@ -1,9 +1,14 @@
-from preprocessing.read_data import read_data_json, read_labels
+from src.preprocessing.read_data import read_data_json, read_labels
 import pandas as pd
 
 
 def create_features() -> tuple[pd.DataFrame, list[int]]:
-    df = pd.read_csv("midterm-2018/data.csv")
+    # df = pd.read_csv("../midterm-2018/data.csv")
+    users_df = read_data_json(prefix='../')
+    labels = read_labels(prefix='../')
+
+    df = pd.merge(users_df, labels, on="user_id")
+
     dtype_spec = {
         "description": "str",
         "lang": "str",
