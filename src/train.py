@@ -1,11 +1,10 @@
 import torch
 from torch.nn import BCELoss
 from torch.optim import Adam
+from tqdm import tqdm
 
 class Train:
-    def __init__(self, train_data, test_data,  model, model_name, epochs=10):
-        self.train_data = train_data
-        self.test_data = test_data
+    def __init__(self, model, model_name, epochs=10):
         self.model = model
         self.model_name = model_name
         self.epochs = epochs
@@ -16,21 +15,21 @@ class Train:
         else:
             self.device = torch.device("cpu")
         self.criterion = BCELoss()
-        self.optimizer = Adam(model.parameters(), lr=0.2)
+        self.optimizer = Adam(model.parameters(), lr=0.01)
 
-    def train(self):
+    def train(self, train_dataloader, test_dataloader):
         self.model.to(self.device)
         train_losses, validation_losses = [], []
 
         for epoch in range(self.epochs):
             self.model.train()
-            running_losses = self.train_one_epoch()
+            running_losses = self.train_one_epoch(train_dataloader)
             train_losses.append(sum(running_losses) / len(running_losses))
 
-            validation_loss, accuracy = self.evaluate()
+            validation_loss, accuracy = self.evaluate(test_dataloader)
             validation_losses.append(validation_loss)
 
-            print(f"Epoch {epoch + 1}/{self.epochs}")
+            print(f"\nEpoch {epoch + 1}/{self.epochs}")
             print(f"Train loss: {train_losses[-1]}")
             print(f"Validation loss: {validation_losses[-1]}")
             print(f"Validation accuracy: {accuracy}")
@@ -41,12 +40,12 @@ class Train:
             f"results/{self.model_name}.pth",
         )
 
-    def train_one_epoch(self):
+    def train_one_epoch(self, train_dataloader):
         running_losses = []
-        for X, y in self.train_data:
-            X, y = X.to(self.device), y.to(self.device)
-            output = self.model(X)[0]
-            loss = self.criterion(output, y)
+        for batch, (X, labels) in tqdm(enumerate(train_dataloader), total= len(train_dataloader), desc="Training"):
+            X, labels = X.to(self.device), labels.to(self.device)
+            outputs = self.model(X).squeeze(1)
+            loss = self.criterion(outputs, labels)
             self.optimizer.zero_grad()
             loss.backward()
             self.optimizer.step()
@@ -54,19 +53,19 @@ class Train:
         return running_losses
 
 
-    def evaluate(self):
+    def evaluate(self, test_dataloader):
         self.model.eval()
         test_loss = 0.0
         correct = 0
 
         with torch.no_grad():
-            for X, y in self.test_data:
-                X, y = X.to(self.device), y.to(self.device)
-                output = self.model(X)[0]
-                loss = self.criterion(output, y)
+            for batch, (X, labels) in tqdm(enumerate(test_dataloader), total= len(test_dataloader), desc="Validating"):
+                X, labels = X.to(self.device), labels.to(self.device)
+                outputs = self.model(X).squeeze(1)
+                loss = self.criterion(outputs, labels)
                 test_loss += loss.item()
-                correct += 1 if output == y else 0
+                correct += (outputs.round() == labels).sum().item()
 
-        accuracy = correct / len(self.test_data)
-        return test_loss / len(self.test_data), accuracy
+        accuracy = correct / len(test_dataloader.dataset)
+        return test_loss / len(test_dataloader.dataset), accuracy
         
