@@ -5,10 +5,9 @@ from tqdm import tqdm
 
 
 class NNTrainer:
-    def __init__(self, model, model_name, epochs=10):
+    def __init__(self, model, model_name):
         self.model = model
         self.model_name = model_name
-        self.epochs = epochs
         if torch.cuda.is_available():
             self.device = torch.device("cuda")
         elif torch.backends.mps.is_available():
@@ -16,13 +15,15 @@ class NNTrainer:
         else:
             self.device = torch.device("cpu")
         self.criterion = BCELoss()
-        self.optimizer = Adam(model.parameters(), lr=0.01)
+        self.optimizer = Adam(self.model.parameters(), lr=0.01)
 
-    def train(self, train_dataloader, test_dataloader):
+    def train(self, data_maneger, epochs=10):
         self.model.to(self.device)
         train_losses, validation_losses = [], []
+        train_dataloader = data_maneger.get_train_dataloader()
+        test_dataloader = data_maneger.get_test_dataloader()
 
-        for epoch in range(self.epochs):
+        for epoch in range(epochs):
             self.model.train()
             running_losses = self.train_one_epoch(train_dataloader)
             train_losses.append(sum(running_losses) / len(running_losses))
@@ -30,7 +31,7 @@ class NNTrainer:
             validation_loss, accuracy = self.evaluate(test_dataloader)
             validation_losses.append(validation_loss)
 
-            print(f"\nEpoch {epoch + 1}/{self.epochs}")
+            print(f"\nEpoch {epoch + 1}/{epochs}")
             print(f"Train loss: {train_losses[-1]}")
             print(f"Validation loss: {validation_losses[-1]}")
             print(f"Validation accuracy: {accuracy}")
