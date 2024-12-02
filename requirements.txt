@@ -1,0 +1,4 @@
+ipython==8.12.3
+pandas==1.5.2
+python-dotenv==1.0.1
+twikit==2.2.0
