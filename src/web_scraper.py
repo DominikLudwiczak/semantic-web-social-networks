@@ -7,7 +7,7 @@ import pandas as pd
 from IPython.display import display
 
 
-async def main():
+async def scrape_tweets(user_name: str):
     load_dotenv()
     AUTH_INFO_1 = os.getenv("AUTH_INFO_1")
     PASSWORD = os.getenv("PASSWORD")
@@ -25,7 +25,7 @@ async def main():
 
     client.load_cookies(path="cookies.json")
 
-    user = await client.get_user_by_screen_name("vivaliteracy")
+    user = await client.get_user_by_screen_name(user_name)
     tweets = await user.get_tweets("Tweets", count=5)
 
     tweets_to_store = []
@@ -45,5 +45,5 @@ async def main():
     return df
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
+# if __name__ == "__main__":
+#     asyncio.run(scrape_tweets())
