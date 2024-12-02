@@ -42,6 +42,8 @@ async def main():
     df = df.sort_values(by="favorite_count", ascending=False)
     display(df)
 
+    return df
+
 
 if __name__ == "__main__":
     asyncio.run(main())
