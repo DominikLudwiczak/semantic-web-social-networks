@@ -1,9 +1,9 @@
-import sns as sns
 from matplotlib import pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix
 import pandas as pd
 import seaborn as sns
+
 
 class RandomForest:
     def __init__(self, data_manager):

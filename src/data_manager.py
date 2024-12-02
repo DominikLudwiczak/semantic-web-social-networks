@@ -1,7 +1,7 @@
 import torch
 from sklearn.model_selection import train_test_split
 from torch.utils.data import TensorDataset, DataLoader
-from src.preprocessing.create_features import create_features
+from preprocessing.create_features import create_features
 
 
 class DataManager:

@@ -39,12 +39,14 @@ class NNTrainer:
 
         torch.save(
             self.model.state_dict(),
-            f"results/{self.model_name}.pth",
+            f"src/results/{self.model_name}.pth",
         )
 
     def train_one_epoch(self, train_dataloader):
         running_losses = []
-        for batch, (X, labels) in tqdm(enumerate(train_dataloader), total= len(train_dataloader), desc="Training"):
+        for batch, (X, labels) in tqdm(
+            enumerate(train_dataloader), total=len(train_dataloader), desc="Training"
+        ):
             X, labels = X.to(self.device), labels.to(self.device)
             outputs = self.model(X).squeeze(1)
             loss = self.criterion(outputs, labels)
@@ -54,14 +56,17 @@ class NNTrainer:
             running_losses.append(loss.item())
         return running_losses
 
-
     def evaluate(self, test_dataloader):
         self.model.eval()
         test_loss = 0.0
         correct = 0
 
         with torch.no_grad():
-            for batch, (X, labels) in tqdm(enumerate(test_dataloader), total= len(test_dataloader), desc="Validating"):
+            for batch, (X, labels) in tqdm(
+                enumerate(test_dataloader),
+                total=len(test_dataloader),
+                desc="Validating",
+            ):
                 X, labels = X.to(self.device), labels.to(self.device)
                 outputs = self.model(X).squeeze(1)
                 loss = self.criterion(outputs, labels)
