@@ -1,24 +1,47 @@
-from ntscraper import Nitter
+from twikit import Client
+import json
+from dotenv import load_dotenv
+import os
+import asyncio
 import pandas as pd
-from multiprocessing import freeze_support
+from IPython.display import display
 
 
-def main():
-    scraper = Nitter(log_level=1, skip_instance_check=False)
-    data = pd.read_csv("midterm-2018/data.csv")
-    data = data[["user_id", "screen_name", "name"]]
-    sample = data.sample(10)
+async def main():
+    load_dotenv()
+    AUTH_INFO_1 = os.getenv("AUTH_INFO_1")
+    PASSWORD = os.getenv("PASSWORD")
+    if PASSWORD == None:
+        print("Make sure to setup login credentials in .env file")
+        return
+    client = Client(language="en-US")
+    if not os.path.exists("cookies.json"):
+        try:
+            await client.login(auth_info_1=AUTH_INFO_1, password=PASSWORD)
+            client.save_cookies("cookies.json")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+            return
 
-    for index, row in sample.iterrows():
-        tweets = scraper.get_tweets(
-            ["4858296837", "ncaraballoPR", "Natalie Caraballo"],
-            mode="user",
-            number=1,
+    client.load_cookies(path="cookies.json")
+
+    user = await client.get_user_by_screen_name("vivaliteracy")
+    tweets = await user.get_tweets("Tweets", count=5)
+
+    tweets_to_store = []
+    for tweet in tweets:
+        tweets_to_store.append(
+            {
+                "created_at": tweet.created_at,
+                "favorite_count": tweet.favorite_count,
+                "full_text": tweet.full_text,
+            }
         )
-        print(tweets)
-    print("Done")
+
+    df = pd.DataFrame(tweets_to_store)
+    df = df.sort_values(by="favorite_count", ascending=False)
+    display(df)
 
 
 if __name__ == "__main__":
-    freeze_support()
-    main()
+    asyncio.run(main())
