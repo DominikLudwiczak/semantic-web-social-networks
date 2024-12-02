@@ -32,3 +32,12 @@ Description: Manually labeled human and bot accounts from 2018 US midterm electi
 - label
 
 [Dataset link](https://botometer.osome.iu.edu/bot-repository/datasets.html)
+
+## Project:
+
+### .env
+
+To run project correctly setup .env file is needed:
+
+- AUTH_INFO_1: X.com account name
+- PASSWORD: X.com password

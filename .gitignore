@@ -1,2 +1,4 @@
 midterm-2018/*
 *.pyc
+.env
+cookies.json
