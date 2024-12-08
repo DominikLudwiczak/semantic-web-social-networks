@@ -18,5 +18,5 @@ class LogisticRegressionModel:
         X_test, y_test = self.data_manager.get_test_dataset()
         y_pred = self.model.predict(X_test)
 
-        print(confusion_matrix(y_test, y_pred))
+        print(confusion_matrix(y_test, y_pred, labels=["bot", "human"]))
         print(classification_report(y_test, y_pred))

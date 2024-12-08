@@ -1,8 +1,5 @@
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.metrics import classification_report, confusion_matrix
-import pandas as pd
-import seaborn as sns
-from matplotlib import pyplot as plt
 
 
 class GradientBoosting:
