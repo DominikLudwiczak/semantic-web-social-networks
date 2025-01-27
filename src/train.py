@@ -15,6 +15,7 @@ class Train:
 
     def train(self):
         """main method used to train and evaluate models"""
+
         print("SIMPLE NN CLASSIFIER")
         trainer = NNTrainer(NNClassifier(), "simple_nn_classifier")
         trainer.train(self.data_manager, epochs=5)
@@ -24,10 +25,10 @@ class Train:
         rf.train()
         rf.statistics()
 
-        # print("\nSUPPORT VECTOR MACHINE")
-        # svm = SVMClassifier(self.data_manager)
-        # svm.train()
-        # svm.statistics()
+        print("\nSUPPORT VECTOR MACHINE")
+        svm = SVMClassifier(self.data_manager)
+        svm.train()
+        svm.statistics()
 
         print("\nGRADIENT BOOSTING")
         gb = GradientBoosting(self.data_manager)
