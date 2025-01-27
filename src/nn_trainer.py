@@ -2,10 +2,16 @@ import torch
 from torch.nn import BCELoss
 from torch.optim import Adam
 from tqdm import tqdm
+from data_manager import DataManager
+from torch.utils.data import DataLoader
 
 
 class NNTrainer:
-    def __init__(self, model, model_name):
+    """
+    Wrapper for training and evaluating models
+    """
+
+    def __init__(self, model, model_name: str):
         self.model = model
         self.model_name = model_name
         if torch.cuda.is_available():
@@ -17,7 +23,8 @@ class NNTrainer:
         self.criterion = BCELoss()
         self.optimizer = Adam(self.model.parameters(), lr=0.01)
 
-    def train(self, data_maneger, epochs=10):
+    def train(self, data_maneger: DataManager, epochs: int = 10):
+        """Train model initialized in class"""
         self.model.to(self.device)
         train_losses, validation_losses = [], []
         train_dataloader = data_maneger.get_train_dataloader()
@@ -25,7 +32,7 @@ class NNTrainer:
 
         for epoch in range(epochs):
             self.model.train()
-            running_losses = self.train_one_epoch(train_dataloader)
+            running_losses = self.__train_one_epoch(train_dataloader)
             train_losses.append(sum(running_losses) / len(running_losses))
 
             validation_loss, accuracy = self.evaluate(test_dataloader)
@@ -42,7 +49,7 @@ class NNTrainer:
             f"src/results/{self.model_name}.pth",
         )
 
-    def train_one_epoch(self, train_dataloader):
+    def __train_one_epoch(self, train_dataloader: DataLoader):
         running_losses = []
         for batch, (X, labels) in tqdm(
             enumerate(train_dataloader), total=len(train_dataloader), desc="Training"
@@ -56,7 +63,8 @@ class NNTrainer:
             running_losses.append(loss.item())
         return running_losses
 
-    def evaluate(self, test_dataloader):
+    def evaluate(self, test_dataloader: DataLoader):
+        """Evaluate initialized model"""
         self.model.eval()
         test_loss = 0.0
         correct = 0

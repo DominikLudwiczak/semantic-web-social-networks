@@ -3,10 +3,13 @@ from sklearn.metrics import classification_report, confusion_matrix
 import pandas as pd
 import seaborn as sns
 from matplotlib import pyplot as plt
+from data_manager import DataManager
 
 
 class LogisticRegressionModel:
-    def __init__(self, data_manager):
+    """Wrapper for logistic regression approach matcing project pipeline"""
+
+    def __init__(self, data_manager: DataManager):
         self.data_manager = data_manager
 
     def train(self):

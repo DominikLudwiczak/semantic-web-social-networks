@@ -3,10 +3,13 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix
 import pandas as pd
 import seaborn as sns
+from data_manager import DataManager
 
 
 class RandomForest:
-    def __init__(self, data_manager):
+    """Wrapper for random forest approach matcing project pipeline"""
+
+    def __init__(self, data_manager: DataManager):
         self.data_manager = data_manager
 
     def train(self):

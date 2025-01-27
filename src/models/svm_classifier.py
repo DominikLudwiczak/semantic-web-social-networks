@@ -1,9 +1,12 @@
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report, confusion_matrix
+from data_manager import DataManager
 
 
 class SVMClassifier:
-    def __init__(self, data_manager):
+    """Wrapper for svm classifier approach matcing project pipeline"""
+
+    def __init__(self, data_manager: DataManager):
         self.data_manager = data_manager
 
     def train(self):

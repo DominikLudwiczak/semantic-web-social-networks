@@ -1,9 +1,12 @@
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.metrics import classification_report, confusion_matrix
+from data_manager import DataManager
 
 
 class GradientBoosting:
-    def __init__(self, data_manager):
+    """Wrapper for gradient boosting approach matcing project pipeline"""
+
+    def __init__(self, data_manager: DataManager):
         self.data_manager = data_manager
 
     def train(self):

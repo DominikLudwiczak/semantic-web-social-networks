@@ -37,7 +37,7 @@ Description: Manually labeled human and bot accounts from 2018 US midterm electi
 
 ### .env
 
-To run project correctly setup .env file is needed:
+<!-- To run project correctly setup .env file is needed:
 
 - AUTH_INFO_1: X.com account name
-- PASSWORD: X.com password
+- PASSWORD: X.com password -->

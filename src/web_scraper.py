@@ -7,7 +7,19 @@ import pandas as pd
 from IPython.display import display
 
 
+class DeprecatedFunctionError(Exception):
+    """Custom exception for deprecated functions."""
+
+    pass
+
+
 async def scrape_tweets(user_name: str):
+    """Deprecated due to request rate limits"""
+    raise DeprecatedFunctionError(
+        "The 'scrape_tweets' function is deprecated due to request rate limits and should not be used. "
+        "Please update your code to use an alternative approach."
+    )
+
     load_dotenv()
     AUTH_INFO_1 = os.getenv("AUTH_INFO_1")
     PASSWORD = os.getenv("PASSWORD")
@@ -40,7 +52,6 @@ async def scrape_tweets(user_name: str):
 
     df = pd.DataFrame(tweets_to_store)
     df = df.sort_values(by="favorite_count", ascending=False)
-    display(df)
 
     return df
 

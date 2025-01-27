@@ -4,13 +4,17 @@ from nn_trainer import NNTrainer
 from models.svm_classifier import SVMClassifier
 from models.gradient_boosting import GradientBoosting
 from models.logistic_regression import LogisticRegressionModel
+from data_manager import DataManager
 
 
 class Train:
-    def __init__(self, data_manager):
+    """Pipeline for training and evaluating models"""
+
+    def __init__(self, data_manager: DataManager):
         self.data_manager = data_manager
 
     def train(self):
+        """main method used to train and evaluate models"""
         print("SIMPLE NN CLASSIFIER")
         trainer = NNTrainer(NNClassifier(), "simple_nn_classifier")
         trainer.train(self.data_manager, epochs=5)

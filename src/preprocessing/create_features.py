@@ -3,6 +3,7 @@ import pandas as pd
 
 
 def create_features() -> tuple[pd.DataFrame, list[int]]:
+    """Converts initial .csv dataset to one used in classification task"""
     users_df = read_data_json(prefix="")
     labels = read_labels(prefix="")
 

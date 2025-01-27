@@ -5,6 +5,8 @@ from preprocessing.create_features import create_features
 
 
 class DataManager:
+    """Data manager used to create dataloaders"""
+
     def __init__(self):
         self.create_dataloaders()
 
@@ -29,10 +31,10 @@ class DataManager:
         self.train_dataloader = DataLoader(train_dataset, batch_size=64, shuffle=True)
         self.test_dataloader = DataLoader(test_dataset, batch_size=64, shuffle=True)
 
-    def get_train_dataloader(self):
+    def get_train_dataloader(self) -> DataLoader:
         return self.train_dataloader
 
-    def get_test_dataloader(self):
+    def get_test_dataloader(self) -> DataLoader:
         return self.test_dataloader
 
     def get_train_dataset(self):

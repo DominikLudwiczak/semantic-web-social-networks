@@ -1,8 +1,11 @@
 from abc import ABC, abstractmethod
+from data_manager import DataManager
 
 
 class AbstractModel(ABC):
-    def __init__(self, data_manager):
+    """Abstract wrapper for classification models"""
+
+    def __init__(self, data_manager: DataManager):
         self.data_manager = data_manager
 
     @abstractmethod

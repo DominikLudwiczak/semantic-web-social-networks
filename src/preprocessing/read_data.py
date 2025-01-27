@@ -2,7 +2,12 @@ import json
 import pandas as pd
 
 
-def read_data_json(prefix=""):
+def read_data_json(prefix: str = ""):
+    """
+    Reads data from .json file
+    Parameters:
+        prefix (str): directory prefix
+    """
     with open(
         f"{prefix}midterm-2018/midterm-2018_processed_user_objects.json", "r"
     ) as f:
@@ -18,7 +23,12 @@ def read_data_json(prefix=""):
     return users_df
 
 
-def read_labels(prefix=""):
+def read_labels(prefix: str = "") -> pd.DataFrame:
+    """
+    Reads labels from .csv file
+    Parameters:
+        prefix (str): directory prefix
+    """
     file_path = f"{prefix}midterm-2018/midterm-2018.tsv"
 
     labels = pd.read_csv(file_path, sep="\t", header=None)
